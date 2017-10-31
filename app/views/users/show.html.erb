@@ -1,0 +1,12 @@
+<% if params[:message] %>
+    <%= params[:message] %><br><br>
+<% end %>
+
+Name: <%= @user.name %><br>
+Mood: <%= @user.mood %><br>
+Height: <%= @user.height %><br>
+Tickets: <%= @user.tickets %><br>
+<%= "ADMIN" if @user.admin == true %><br>
+
+<br>
+<%= link_to "See attractions", attractions_path %>
