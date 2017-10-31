@@ -1,18 +1,18 @@
 class AttractionsController < ApplicationController
     def index
         @attractions = Attraction.all
-        @user = User.find_by(id: session[:user_id])
+        current_user
     end
 
     def show
         @attraction = Attraction.find_by(id: params[:id])
-        @user = User.find_by(id: session[:user_id])
+        current_user
     end
 
     def new
-        @attraction = Attraction.new
-        @user = User.find_by(id: session[:user_id])
-        if !@user.admin
+        if current_user.admin
+            @attraction = Attraction.new
+        else
             redirect_to user_path(@user)
         end
     end
@@ -24,8 +24,9 @@ class AttractionsController < ApplicationController
     end
 
     def edit
-        @user = User.find_by(id: session[:user_id])
-        @attraction = Attraction.find_by(id: params[:id])
+        if current_user.admin
+            @attraction = Attraction.find_by(id: params[:id])
+        end
     end
 
     def update
